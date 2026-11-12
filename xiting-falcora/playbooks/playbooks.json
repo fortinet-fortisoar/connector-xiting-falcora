@@ -1,0 +1,1912 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+      "@type": "WorkflowCollection",
+      "name": "Sample - Xiting Falcora - 1.1.0",
+      "description": "Falcora is Xiting's security operations platform for SAP landscapes. It triages SAP security alerts with AI against customer SOPs, groups them into cases, collects system owner feedback and supports the analyst up to the final verdict. This connector ingests Falcora alerts into FortiSOAR and performs actions like reading alerts and cases, adding enrichment comments, assigning case processors and re-running the AI case analysis.",
+      "visible": true,
+      "image": null,
+      "recordTags": [
+        "Xiting",
+        "xiting-falcora"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Alerts",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Retrieves a list of alerts from Falcora, newest first, based on the time range and filters you have specified. The time range applies to the time Falcora received the alert. Falcora does not page this list, so keep time ranges short.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/97a59990-5330-553a-81ba-7229324a926d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "b0bf7e44-944b-56f2-b31e-9f261484be65",
+                "title": "Xiting Falcora: Get Alerts",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "97a59990-5330-553a-81ba-7229324a926d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Alerts",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "include_details": false
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_alerts",
+                "operationTitle": "Get Alerts",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "1186ef9b-28c8-5fef-9ecf-79b74ddac342"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get Alerts",
+              "sourceStep": "/api/3/workflow_steps/97a59990-5330-553a-81ba-7229324a926d",
+              "targetStep": "/api/3/workflow_steps/1186ef9b-28c8-5fef-9ecf-79b74ddac342",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "294e87c5-3f88-568c-adc3-4d0a7f7dcfe7"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "02cb46c1-d41a-5f6f-9525-c7089cd57a52",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Alert Details",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Retrieves the full details of a specific alert, including the raw event, triage justification, SOP, owner feedback and action log, based on the alert ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/ed9dbed3-1600-5151-803a-ee2d1bbfcb03",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "8985218f-7b3b-5aa9-b067-d63c32a105db",
+                "title": "Xiting Falcora: Get Alert Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "ed9dbed3-1600-5151-803a-ee2d1bbfcb03"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Alert Details",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {},
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_alert_details",
+                "operationTitle": "Get Alert Details",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "ccb7cbda-5b18-515e-b5a5-a5cd30c7c083"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get Alert Details",
+              "sourceStep": "/api/3/workflow_steps/ed9dbed3-1600-5151-803a-ee2d1bbfcb03",
+              "targetStep": "/api/3/workflow_steps/ccb7cbda-5b18-515e-b5a5-a5cd30c7c083",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "9c551a47-4c6d-58bb-8958-b014ff353728"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "9c0cc2cc-108c-53fb-9413-6760b48ec937",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Cases",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Retrieves a list of cases from Falcora based on the time range and filters you have specified. The time range applies to the case creation time.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/47cc9b30-ec3f-5bd4-96ec-ef6bcad5eddf",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "279db4fc-d877-5cb6-886a-09733938cccd",
+                "title": "Xiting Falcora: Get Cases",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "47cc9b30-ec3f-5bd4-96ec-ef6bcad5eddf"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Cases",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {},
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_cases",
+                "operationTitle": "Get Cases",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "6db3a550-6949-52ad-b73b-48642924db91"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get Cases",
+              "sourceStep": "/api/3/workflow_steps/47cc9b30-ec3f-5bd4-96ec-ef6bcad5eddf",
+              "targetStep": "/api/3/workflow_steps/6db3a550-6949-52ad-b73b-48642924db91",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "57410c61-57de-5d89-ba7a-fc3273e64d49"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "6ab5d97e-a169-59e9-9d8f-0333bf548a25",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Case Details",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Retrieves the full details of a specific case, including the summary, AI analysis, analyst decision, progress, latest AI investigation, history and comments, based on the case ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/e4cae896-0670-5d15-b8e8-163148bcc90e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "6fb9bbd2-9c8e-5414-8663-eef84b271e4b",
+                "title": "Xiting Falcora: Get Case Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "e4cae896-0670-5d15-b8e8-163148bcc90e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Case Details",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {},
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_case_details",
+                "operationTitle": "Get Case Details",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "3982c1df-6ddb-5d66-936a-303bf9848766"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get Case Details",
+              "sourceStep": "/api/3/workflow_steps/e4cae896-0670-5d15-b8e8-163148bcc90e",
+              "targetStep": "/api/3/workflow_steps/3982c1df-6ddb-5d66-936a-303bf9848766",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "5d244f71-0468-5747-ac4d-58c3e2a0679d"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "26800197-52ac-501f-9766-d85a33fd4755",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Case Alerts",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Retrieves the alerts linked to a specific case.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/dea8970d-da71-57da-a64e-ec10596204b6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "1345c8de-5194-5364-82dc-452ca955fcbb",
+                "title": "Xiting Falcora: Get Case Alerts",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "dea8970d-da71-57da-a64e-ec10596204b6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Case Alerts",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "include_details": false
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_case_alerts",
+                "operationTitle": "Get Case Alerts",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "af09c3e0-1936-5705-9e9f-3ac14703e22a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get Case Alerts",
+              "sourceStep": "/api/3/workflow_steps/dea8970d-da71-57da-a64e-ec10596204b6",
+              "targetStep": "/api/3/workflow_steps/af09c3e0-1936-5705-9e9f-3ac14703e22a",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "85601811-2afe-5f71-87e2-f8bdca7b66f5"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "1378f51a-3807-50dc-9aa1-b14645d7c7e6",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Add Case Comment",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Adds enrichment to a case as a plain-text comment. Comments longer than 1000 characters are split into several comments. The sequence \"${\" is escaped automatically. Comments cannot be deleted and completed cases do not accept comments.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/8204ae1b-02c0-5240-8c91-584246cf99b3",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "acd922a9-d059-5923-8e1f-e0df4e8811e8",
+                "title": "Xiting Falcora: Add Case Comment",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "8204ae1b-02c0-5240-8c91-584246cf99b3"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Case Comment",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "prefix": "[FortiSOAR]",
+                  "split_long_comments": true
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "add_case_comment",
+                "operationTitle": "Add Case Comment",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "a9644a09-4c29-5c51-a4c8-d6d9b7a457f9"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Add Case Comment",
+              "sourceStep": "/api/3/workflow_steps/8204ae1b-02c0-5240-8c91-584246cf99b3",
+              "targetStep": "/api/3/workflow_steps/a9644a09-4c29-5c51-a4c8-d6d9b7a457f9",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "bdd7acc6-bfc6-5dad-8655-38111c78958f"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "2a8b3a5d-7abb-57d8-a07f-adff1ee97e77",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Assign Case Processor",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Sets or clears the processor of a case. Only the processor can finalize a case.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/adb56c7e-4dbb-5ff8-891c-2495df34378d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "6a398d71-6792-54d5-8582-951e3ca8db1b",
+                "title": "Xiting Falcora: Assign Case Processor",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "adb56c7e-4dbb-5ff8-891c-2495df34378d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Assign Case Processor",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "assignee": "Specific User",
+                  "processor_id": ""
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "assign_case_processor",
+                "operationTitle": "Assign Case Processor",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "a7fa6e96-6aef-54ae-80dc-c2f44f4fb2dc"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Assign Case Processor",
+              "sourceStep": "/api/3/workflow_steps/adb56c7e-4dbb-5ff8-891c-2495df34378d",
+              "targetStep": "/api/3/workflow_steps/a7fa6e96-6aef-54ae-80dc-c2f44f4fb2dc",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "681233c9-3e80-575a-bf7a-0d955d0d7e91"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "9faba8d6-d9bf-5e5a-baca-c6810ee13146",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Trigger Case Analysis",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Re-runs the AI case analysis, for example after adding significant enrichment. Also reopens completed cases for analysis.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/dbe27df8-6498-5b1c-bee0-30f36d5ec258",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "f88cd779-5e7f-5d58-b159-3433df38de31",
+                "title": "Xiting Falcora: Trigger Case Analysis",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "dbe27df8-6498-5b1c-bee0-30f36d5ec258"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Trigger Case Analysis",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {},
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "trigger_case_analysis",
+                "operationTitle": "Trigger Case Analysis",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "12b73c8c-f64f-5953-b553-5044be6bce07"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Trigger Case Analysis",
+              "sourceStep": "/api/3/workflow_steps/dbe27df8-6498-5b1c-bee0-30f36d5ec258",
+              "targetStep": "/api/3/workflow_steps/12b73c8c-f64f-5953-b553-5044be6bce07",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "457a04a0-6dea-5d91-b831-a02d5d6078bc"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "43a9184d-f6e2-5863-9007-d8e4a9920ba5",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> Xiting Falcora > Fetch",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Fetches alerts received by Xiting Falcora since the last pull. The window ends a configurable delay before now, so most alerts have finished AI triage when they are fetched.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/e0caa5b3-7b65-5d51-b8c5-01bff3f12081",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  },
+                  "_configuration_schema": "[\n  {\n    \"title\": \"Pull Alerts Received in Past X Minutes\",\n    \"name\": \"minutes\",\n    \"type\": \"integer\",\n    \"visible\": true,\n    \"required\": false,\n    \"editable\": true,\n    \"value\": 60,\n    \"tooltip\": \"On the first run, pull the alerts received in the past X minutes.\",\n    \"description\": \"On the first run, pull the alerts received in the past X minutes. Later runs continue from the last pull time.\"\n  },\n  {\n    \"title\": \"Triage Delay (Minutes)\",\n    \"name\": \"delayMinutes\",\n    \"type\": \"integer\",\n    \"visible\": true,\n    \"required\": false,\n    \"editable\": true,\n    \"value\": 5,\n    \"tooltip\": \"Only pull alerts received at least this many minutes ago.\",\n    \"description\": \"Only pull alerts received at least this many minutes ago, so Falcora has time to finish AI triage. Set to 0 to pull immediately.\"\n  },\n  {\n    \"title\": \"Overlap (Minutes)\",\n    \"name\": \"overlapMinutes\",\n    \"type\": \"integer\",\n    \"visible\": true,\n    \"required\": false,\n    \"editable\": true,\n    \"value\": 1,\n    \"tooltip\": \"Overlap consecutive pull windows by this many minutes.\",\n    \"description\": \"Overlap consecutive pull windows by this many minutes. Alerts fetched twice are upserted on the Falcora alert ID (Source ID). Set to 0 if the unique constraint of the Alerts module (Source ID by default) was changed.\"\n  },\n  {\n    \"title\": \"Include Alert Details\",\n    \"name\": \"includeDetails\",\n    \"type\": \"checkbox\",\n    \"visible\": true,\n    \"required\": false,\n    \"editable\": true,\n    \"value\": true,\n    \"tooltip\": \"Read each alert individually to include the raw event and triage justification.\",\n    \"description\": \"Read each alert individually to include the raw event (AlertData), triage justification, SOP and owner feedback. Makes one extra request per alert.\"\n  }\n]"
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "e0caa5b3-7b65-5d51-b8c5-01bff3f12081"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "minutes": "{{ vars.minutes | default(60, true) }}",
+                "delayMinutes": "{{ vars.delayMinutes | default(5, true) }}",
+                "overlapMinutes": "{{ vars.overlapMinutes | default(1, true) }}",
+                "includeDetails": "{{ vars.includeDetails | default(true) }}",
+                "macroNameForLastPullTime": "XitingFalcoraLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "f856fe35-a250-589f-bd86-d07ad4b1c56c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Last Pull Time",
+              "description": null,
+              "arguments": {
+                "connector": "cyops_utilities",
+                "version": "3.3.1",
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.macroNameForLastPullTime}}",
+                  "body": "",
+                  "method": "GET"
+                },
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "220",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "82aaf157-9191-5a73-b1b8-47d630e8dca9"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Macro",
+              "description": null,
+              "arguments": {
+                "connector": "cyops_utilities",
+                "version": "3.3.1",
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?format=json",
+                  "body": "{ 'name': '{{vars.macroNameForLastPullTime}}', 'value': '0' }",
+                  "method": "POST"
+                },
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "420",
+              "left": "-120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "2ae0ede2-71b4-5f86-8433-1f4cb80a872b"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "No Previous Pull",
+              "description": null,
+              "arguments": {
+                "lastPullTime": ""
+              },
+              "status": null,
+              "top": "520",
+              "left": "-120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "6f65953f-e11f-57a2-9e6b-7bcbdd560f9b"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Read Last Pull Time",
+              "description": null,
+              "arguments": {
+                "lastPullTime": "{{vars.steps.Get_Last_Pull_Time.data['hydra:member'][0].value}}"
+              },
+              "status": null,
+              "top": "420",
+              "left": "160",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "23a2534b-058c-5588-91bf-73a2d4ce756e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Check If Macro Exists",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "No",
+                    "step_iri": "/api/3/workflow_steps/2ae0ede2-71b4-5f86-8433-1f4cb80a872b",
+                    "condition": "{{ vars.steps.Get_Last_Pull_Time.data['hydra:totalItems'] == 0 }}",
+                    "step_name": "Create Macro"
+                  },
+                  {
+                    "option": "Yes",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/23a2534b-058c-5588-91bf-73a2d4ce756e",
+                    "step_name": "Read Last Pull Time"
+                  }
+                ],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "320",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "group": null,
+              "uuid": "7adea7a6-f9c8-52cb-876c-ba99a2bc818d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Compute Window",
+              "description": null,
+              "arguments": {
+                "windowEnd": "{{ arrow.utcnow().shift(minutes=-(vars.delayMinutes | int)).format('YYYY-MM-DDTHH:mm:ss') }}Z",
+                "windowStart": "{%- if vars.lastPullTime and vars.lastPullTime | string != '0' -%}{{ arrow.get(vars.lastPullTime).shift(minutes=-(vars.overlapMinutes | int)).format('YYYY-MM-DDTHH:mm:ss') }}Z{%- else -%}{{ arrow.utcnow().shift(minutes=-((vars.minutes | int) + (vars.delayMinutes | int))).format('YYYY-MM-DDTHH:mm:ss') }}Z{%- endif -%}"
+              },
+              "status": null,
+              "top": "620",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "b6732bb6-ca90-5065-a36d-e792ddaadc9c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Alerts",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "timestamp_from": "{{vars.windowStart}}",
+                  "timestamp_to": "{{vars.windowEnd}}",
+                  "include_details": "{{vars.includeDetails}}"
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_alerts",
+                "operationTitle": "Get Alerts",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "720",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "9de0b1a7-41c2-59a5-a324-e736e0ffbee1"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Last Pull Time",
+              "description": null,
+              "arguments": {
+                "connector": "cyops_utilities",
+                "version": "3.3.1",
+                "params": {
+                  "macro": "{{vars.macroNameForLastPullTime}}",
+                  "value": "{{vars.windowEnd}}"
+                },
+                "operation": "updatemacro",
+                "operationTitle": "FSR: Create/Update Global Variables",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "820",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "96afb495-1210-557e-9ec9-046043bd9cab"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Return Data",
+              "description": null,
+              "arguments": {
+                "data": "{{vars.steps.Get_Alerts.data}}"
+              },
+              "status": null,
+              "top": "920",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "aff21961-7b4f-51c5-b6e7-7772cc52ff08"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "sourceStep": "/api/3/workflow_steps/e0caa5b3-7b65-5d51-b8c5-01bff3f12081",
+              "targetStep": "/api/3/workflow_steps/f856fe35-a250-589f-bd86-d07ad4b1c56c",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "91d86f12-5f0f-551f-919e-eb03e42960c8"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Get Last Pull Time",
+              "sourceStep": "/api/3/workflow_steps/f856fe35-a250-589f-bd86-d07ad4b1c56c",
+              "targetStep": "/api/3/workflow_steps/82aaf157-9191-5a73-b1b8-47d630e8dca9",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "5fa414ce-ad3f-501f-94ab-14d602d949aa"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Last Pull Time -> Check If Macro Exists",
+              "sourceStep": "/api/3/workflow_steps/82aaf157-9191-5a73-b1b8-47d630e8dca9",
+              "targetStep": "/api/3/workflow_steps/7adea7a6-f9c8-52cb-876c-ba99a2bc818d",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "eca2caea-e141-5114-bcec-7c47dc7a028b"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Check If Macro Exists -> Create Macro",
+              "sourceStep": "/api/3/workflow_steps/7adea7a6-f9c8-52cb-876c-ba99a2bc818d",
+              "targetStep": "/api/3/workflow_steps/2ae0ede2-71b4-5f86-8433-1f4cb80a872b",
+              "label": "No",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "03e0ec75-06c2-5084-a27f-ae0a89f193b8"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Check If Macro Exists -> Read Last Pull Time",
+              "sourceStep": "/api/3/workflow_steps/7adea7a6-f9c8-52cb-876c-ba99a2bc818d",
+              "targetStep": "/api/3/workflow_steps/23a2534b-058c-5588-91bf-73a2d4ce756e",
+              "label": "Yes",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "d8c1e241-7eb3-5b67-a423-9bc8fe3f71ee"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Create Macro -> No Previous Pull",
+              "sourceStep": "/api/3/workflow_steps/2ae0ede2-71b4-5f86-8433-1f4cb80a872b",
+              "targetStep": "/api/3/workflow_steps/6f65953f-e11f-57a2-9e6b-7bcbdd560f9b",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "1c669f2f-287f-52c8-9a1e-7cb8c8853680"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "No Previous Pull -> Compute Window",
+              "sourceStep": "/api/3/workflow_steps/6f65953f-e11f-57a2-9e6b-7bcbdd560f9b",
+              "targetStep": "/api/3/workflow_steps/b6732bb6-ca90-5065-a36d-e792ddaadc9c",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "945bcfca-a297-5d5c-ae14-87bb1b530413"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Read Last Pull Time -> Compute Window",
+              "sourceStep": "/api/3/workflow_steps/23a2534b-058c-5588-91bf-73a2d4ce756e",
+              "targetStep": "/api/3/workflow_steps/b6732bb6-ca90-5065-a36d-e792ddaadc9c",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "3ab74fbf-8d30-5e74-8ca1-94196fd24f1f"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Compute Window -> Get Alerts",
+              "sourceStep": "/api/3/workflow_steps/b6732bb6-ca90-5065-a36d-e792ddaadc9c",
+              "targetStep": "/api/3/workflow_steps/9de0b1a7-41c2-59a5-a324-e736e0ffbee1",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "11f2bb91-4581-5f35-803a-2a4d236b0076"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Alerts -> Update Last Pull Time",
+              "sourceStep": "/api/3/workflow_steps/9de0b1a7-41c2-59a5-a324-e736e0ffbee1",
+              "targetStep": "/api/3/workflow_steps/96afb495-1210-557e-9ec9-046043bd9cab",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "bb7c9558-a76b-5436-bd8b-223e00ab79a7"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Update Last Pull Time -> Return Data",
+              "sourceStep": "/api/3/workflow_steps/96afb495-1210-557e-9ec9-046043bd9cab",
+              "targetStep": "/api/3/workflow_steps/aff21961-7b4f-51c5-b6e7-7772cc52ff08",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "49f839b1-d24a-585c-b1b0-2d35a6279b48"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "40ce50af-05fb-5cab-91b2-38a508ebf90f",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "dataingestion",
+            "fetch",
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> Xiting Falcora > Create Record",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Creates or updates an alert record in FortiSOAR for an alert fetched from Xiting Falcora.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "source_data"
+          ],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/516824f3-f18f-51f1-8acc-a21b96aecbb4",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "516824f3-f18f-51f1-8acc-a21b96aecbb4"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Alert Information",
+              "description": null,
+              "arguments": {
+                "alert_data": "{{vars.input.params['source_data']}}",
+                "severity_label": "{%- set a = vars.input.params['source_data'] -%}{%- set prio = ((a.AlertData or {}).PRIO | default('', true) | string | upper | trim) -%}{%- if prio in ['VERY HIGH', 'VERY_HIGH', 'VERYHIGH', 'CRITICAL', 'CRIT'] -%}Critical{%- elif prio == 'HIGH' -%}High{%- elif prio in ['MEDIUM', 'MED'] -%}Medium{%- elif prio == 'LOW' -%}Low{%- elif a.LLMTriage == 1 -%}Low{%- elif a.LLMTriage == 2 and a.LLMFalsePositiveScore is number and a.LLMFalsePositiveScore <= 20 -%}High{%- else -%}Medium{%- endif -%}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "cfef2af4-3d82-5546-8661-e31ea9b74cbb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Record",
+              "description": null,
+              "arguments": {
+                "resource": {
+                  "name": "{{vars.alert_data.PatternName | default('Xiting Falcora Alert', true)}}",
+                  "description": "{%- set a = vars.alert_data -%}<p>{{ (a.AlertData or {}).MESSAGE | default(a.AlertSemanticDescription, true) | default('', true) | e }}</p><p><strong>Falcora Triage:</strong> {{ a.LLMTriageString | default('pending', true) }}{% if a.LLMFalsePositiveScore is defined %} (false-positive score {{ a.LLMFalsePositiveScore }}/100){% endif %}<br/><strong>Processing Status:</strong> {{ a.ProcessingStatusString | default('', true) }}<br/><strong>SAP System:</strong> {{ a.SystemId | default('', true) }}<br/><strong>SAP Users:</strong> {{ (a.UserIds or []) | join(', ') }}<br/><strong>Falcora Case:</strong> {{ a.CaseId | default('', true) }}{% if a.TriageFlags %}<br/><strong>Triage Flags:</strong> {{ a.TriageFlags | join(', ') }}{% endif %}</p>{% if a.LLMTriageJustification %}<p><strong>Triage Justification (AI-generated):</strong><br/>{{ a.LLMTriageJustification | e }}</p>{% endif %}",
+                  "severity": "{{ 'Severity' | picklist(vars.severity_label) }}",
+                  "type": "/api/3/picklists/574a6ee2-7265-4701-815e-cff83b053bce",
+                  "state": "/api/3/picklists/a1bac09b-1441-45aa-ad1b-c88744e48e72",
+                  "status": "/api/3/picklists/7de816ff-7140-4ee5-bd05-93ce22002146",
+                  "source": "Xiting Falcora",
+                  "sourceId": "{{vars.alert_data.AlertId}}",
+                  "sourcedata": "{{vars.alert_data | toJSON}}",
+                  "ackSlaStatus": "/api/3/picklists/72979f64-e8b9-4888-a965-957e0ec24818",
+                  "respSlaStatus": "/api/3/picklists/72979f64-e8b9-4888-a965-957e0ec24818",
+                  "priorityWeight": 1,
+                  "escalatedtoincident": "/api/3/picklists/2128a09c-153d-4db3-985d-de6be33deae5",
+                  "resolvedAutomatedly": false,
+                  "alertRemainingAckSLA": 0,
+                  "__replace": ""
+                },
+                "operation": "Overwrite",
+                "collection": "/api/3/alerts",
+                "__recommend": [],
+                "fieldOperation": {
+                  "recordTags": "Overwrite"
+                },
+                "step_variables": []
+              },
+              "status": null,
+              "top": "220",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
+              "group": null,
+              "uuid": "b45c82d3-9861-5017-9a15-cec538a8ec71"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Extract Alert Information",
+              "sourceStep": "/api/3/workflow_steps/516824f3-f18f-51f1-8acc-a21b96aecbb4",
+              "targetStep": "/api/3/workflow_steps/cfef2af4-3d82-5546-8661-e31ea9b74cbb",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "91c4b3ee-b3ac-5c53-94d2-0e7f1c221802"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Alert Information -> Create Record",
+              "sourceStep": "/api/3/workflow_steps/cfef2af4-3d82-5546-8661-e31ea9b74cbb",
+              "targetStep": "/api/3/workflow_steps/b45c82d3-9861-5017-9a15-cec538a8ec71",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "ecf9d5ba-40ba-5031-b369-11af4614985c"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "3f6104de-a598-50bf-a690-5735b70592aa",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "create",
+            "dataingestion",
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Xiting Falcora > Ingest",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Ingests alerts from Xiting Falcora into FortiSOAR alerts.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/c1307d62-f1d7-5b84-b4a8-2c6b792362de",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "8f55e6ca-fe59-5895-8830-131c0813a00b",
+                "resources": [
+                  "alerts"
+                ],
+                "__triggerLimit": true,
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "params": [],
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "triggerOnSource": true,
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "showToasterMessage": {
+                  "visible": false,
+                  "messageVisible": true
+                },
+                "triggerOnReplicate": false,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "c1307d62-f1d7-5b84-b4a8-2c6b792362de"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch Alerts",
+              "description": null,
+              "arguments": {
+                "arguments": [],
+                "apply_async": false,
+                "step_variables": [],
+                "pass_parent_env": false,
+                "pass_input_record": false,
+                "workflowReference": "/api/3/workflows/40ce50af-05fb-5cab-91b2-38a508ebf90f"
+              },
+              "status": null,
+              "top": "120",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "group": null,
+              "uuid": "be4b3aae-4473-5273-b704-b8e8132eca5a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Records",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.steps.Fetch_Alerts.data}}",
+                  "parallel": false,
+                  "condition": ""
+                },
+                "arguments": {
+                  "source_data": "{{vars.item}}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "pass_parent_env": false,
+                "pass_input_record": false,
+                "workflowReference": "/api/3/workflows/3f6104de-a598-50bf-a690-5735b70592aa"
+              },
+              "status": null,
+              "top": "220",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "group": null,
+              "uuid": "cc74cc23-8d32-5c04-9c2e-f50c03b05a17"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Fetch Alerts",
+              "sourceStep": "/api/3/workflow_steps/c1307d62-f1d7-5b84-b4a8-2c6b792362de",
+              "targetStep": "/api/3/workflow_steps/be4b3aae-4473-5273-b704-b8e8132eca5a",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "c98af352-b1d7-59f9-9272-93d4d73d7497"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Fetch Alerts -> Create Records",
+              "sourceStep": "/api/3/workflow_steps/be4b3aae-4473-5273-b704-b8e8132eca5a",
+              "targetStep": "/api/3/workflow_steps/cc74cc23-8d32-5c04-9c2e-f50c03b05a17",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "a41cca7e-1929-5084-b50d-8ce83d5c0ee4"
+            }
+          ],
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "89ad3cbf-b35a-5b8b-a473-7ecf918d438e",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "dataingestion",
+            "ingest",
+            "Xiting",
+            "xiting-falcora"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Xiting Falcora > Sync Alerts",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Keeps ingested Xiting Falcora alerts in sync with Falcora. Re-reads the open FortiSOAR alerts from Falcora created in the last maxAgeDays days (newest first, at most batchSize per run) and updates the ones whose triage, owner feedback, case or processing status changed. Run it on a schedule.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/e59a91b7-0d2b-5437-9b89-e4f4cd9e62c6",
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "e60db805-6423-5ae0-8d16-c34d183d56e8",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "sync",
+            "Xiting",
+            "xiting-falcora"
+          ],
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "49ed4c08-bcd0-541c-a5b1-6fa6b5d5a822",
+                "resources": [
+                  "alerts"
+                ],
+                "__triggerLimit": true,
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "params": [],
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "triggerOnSource": true,
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "showToasterMessage": {
+                  "visible": false,
+                  "messageVisible": true
+                },
+                "triggerOnReplicate": false,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "e59a91b7-0d2b-5437-9b89-e4f4cd9e62c6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "maxAgeDays": "7",
+                "batchSize": "100",
+                "addComment": "true"
+              },
+              "status": null,
+              "top": "120",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "66e36714-1da2-57f1-ae5d-3754d0a747c4"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find Falcora Alerts",
+              "description": null,
+              "arguments": {
+                "connector": "cyops_utilities",
+                "version": "3.3.1",
+                "params": {
+                  "iri": "/api/query/alerts?$limit={{vars.batchSize}}",
+                  "body": "{\"logic\": \"AND\", \"filters\": [{\"field\": \"source\", \"operator\": \"eq\", \"value\": \"Xiting Falcora\"}, {\"field\": \"createDate\", \"operator\": \"gte\", \"value\": \"{{ arrow.utcnow().shift(days=-(vars.maxAgeDays | int)).format('YYYY-MM-DDTHH:mm:ss') }}.000Z\"}, {\"field\": \"status\", \"operator\": \"neq\", \"value\": \"{{ 'AlertStatus' | picklist('Closed') }}\"}], \"sort\": [{\"field\": \"createDate\", \"direction\": \"DESC\"}], \"__selectFields\": [\"@id\", \"sourceId\", \"sourcedata\", \"severity\"]}",
+                  "method": "POST"
+                },
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "220",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "3271ad6a-aa05-5bf8-9157-0e59304b9638"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Any Alerts?",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Yes",
+                    "step_iri": "/api/3/workflow_steps/4c6c139e-4426-500f-89ec-77d24f73c3a6",
+                    "condition": "{{ vars.steps.Find_Falcora_Alerts.data['hydra:member'] | length > 0 }}",
+                    "step_name": "Get Alert Updates"
+                  },
+                  {
+                    "option": "No",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/0b545cfe-5025-5e10-a115-df5fe8abcf1c",
+                    "step_name": "No Alerts To Sync"
+                  }
+                ],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "320",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "group": null,
+              "uuid": "89f08bba-03eb-5e36-97a3-42dfb150ae21"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Alert Updates",
+              "description": null,
+              "arguments": {
+                "name": "Xiting Falcora",
+                "config": "''",
+                "params": {
+                  "alerts": "{{vars.steps.Find_Falcora_Alerts.data['hydra:member']}}"
+                },
+                "version": "1.1.0",
+                "connector": "xiting-falcora",
+                "operation": "get_alert_updates",
+                "operationTitle": "Get Alert Updates",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "420",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "4c6c139e-4426-500f-89ec-77d24f73c3a6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "No Alerts To Sync",
+              "description": null,
+              "arguments": {
+                "summary": "No open Xiting Falcora alerts to sync"
+              },
+              "status": null,
+              "top": "420",
+              "left": "320",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "0b545cfe-5025-5e10-a115-df5fe8abcf1c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Changed Alerts",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.steps.Get_Alert_Updates.data.Updated}}",
+                  "parallel": false,
+                  "condition": ""
+                },
+                "arguments": {
+                  "record_iri": "{{vars.item.RecordIRI}}",
+                  "record_severity": "{{vars.item.RecordSeverity}}",
+                  "previous_alert": "{{vars.item.PreviousAlert}}",
+                  "alert": "{{vars.item.Alert}}",
+                  "changes": "{{vars.item.Changes}}",
+                  "add_comment": "{{vars.addComment}}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "pass_parent_env": false,
+                "pass_input_record": false,
+                "workflowReference": "/api/3/workflows/0c04db0d-84c4-54bd-9124-5a841d5c4ea8"
+              },
+              "status": null,
+              "top": "520",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "group": null,
+              "uuid": "59d23ebe-a25f-572c-9c0b-243462b51be2"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Summary",
+              "description": null,
+              "arguments": {
+                "summary": "{%- set r = vars.steps.Get_Alert_Updates.data -%}Checked {{ r.Updated | length + r.Unchanged | length + r.NotFound | length + r.Errors | length }} alerts: {{ r.UpdatedCount }} updated, {{ r.Unchanged | length }} unchanged, {{ r.NotFound | length }} not found in Falcora, {{ r.Errors | length }} errors.",
+                "not_found": "{{vars.steps.Get_Alert_Updates.data.NotFound}}",
+                "errors": "{{vars.steps.Get_Alert_Updates.data.Errors}}"
+              },
+              "status": null,
+              "top": "620",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "aa04e77f-dabb-5566-9c64-c51167136f5c"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "sourceStep": "/api/3/workflow_steps/e59a91b7-0d2b-5437-9b89-e4f4cd9e62c6",
+              "targetStep": "/api/3/workflow_steps/66e36714-1da2-57f1-ae5d-3754d0a747c4",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "509412dd-fe8f-55db-838b-126ef30bedd7"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Find Falcora Alerts",
+              "sourceStep": "/api/3/workflow_steps/66e36714-1da2-57f1-ae5d-3754d0a747c4",
+              "targetStep": "/api/3/workflow_steps/3271ad6a-aa05-5bf8-9157-0e59304b9638",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "49da8139-ac64-54a0-a3aa-9aac7ad9c38b"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Find Falcora Alerts -> Any Alerts?",
+              "sourceStep": "/api/3/workflow_steps/3271ad6a-aa05-5bf8-9157-0e59304b9638",
+              "targetStep": "/api/3/workflow_steps/89f08bba-03eb-5e36-97a3-42dfb150ae21",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "d1f30816-2758-58a8-af04-c3b50ee67a67"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Any Alerts? -> Get Alert Updates",
+              "sourceStep": "/api/3/workflow_steps/89f08bba-03eb-5e36-97a3-42dfb150ae21",
+              "targetStep": "/api/3/workflow_steps/4c6c139e-4426-500f-89ec-77d24f73c3a6",
+              "label": "Yes",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "f7a267da-c11d-58bd-8c8e-2f07cb6d0485"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Any Alerts? -> No Alerts To Sync",
+              "sourceStep": "/api/3/workflow_steps/89f08bba-03eb-5e36-97a3-42dfb150ae21",
+              "targetStep": "/api/3/workflow_steps/0b545cfe-5025-5e10-a115-df5fe8abcf1c",
+              "label": "No",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "b7d36e5d-fda9-511f-95db-b1045cf7b752"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Alert Updates -> Update Changed Alerts",
+              "sourceStep": "/api/3/workflow_steps/4c6c139e-4426-500f-89ec-77d24f73c3a6",
+              "targetStep": "/api/3/workflow_steps/59d23ebe-a25f-572c-9c0b-243462b51be2",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "d4ffeae4-6cb2-5c55-b0fe-bb2816f62dd1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Update Changed Alerts -> Summary",
+              "sourceStep": "/api/3/workflow_steps/59d23ebe-a25f-572c-9c0b-243462b51be2",
+              "targetStep": "/api/3/workflow_steps/aa04e77f-dabb-5566-9c64-c51167136f5c",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "305c8ed9-3a39-5b7f-8dd5-6955f8f0d894"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> Xiting Falcora > Update Record",
+          "aliasName": null,
+          "tag": "#Xiting Falcora",
+          "description": "Updates one FortiSOAR alert with the latest data from Xiting Falcora: description, source data and, unless an analyst changed it, severity. Adds a comment listing what changed. Called by Xiting Falcora > Sync Alerts.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "record_iri",
+            "record_severity",
+            "previous_alert",
+            "alert",
+            "changes",
+            "add_comment"
+          ],
+          "synchronous": false,
+          "collection": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/6a96d8b1-d755-588a-b515-0a0efaf896a6",
+          "groups": [],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "0c04db0d-84c4-54bd-9124-5a841d5c4ea8",
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "recordTags": [
+            "sync",
+            "Xiting",
+            "xiting-falcora"
+          ],
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "__triggerLimit": true,
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                },
+                "triggerOnSource": true,
+                "triggerOnReplicate": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "6a96d8b1-d755-588a-b515-0a0efaf896a6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Alert Information",
+              "description": null,
+              "arguments": {
+                "alert_data": "{{vars.input.params['alert']}}",
+                "add_comment": "{{vars.input.params['add_comment'] | default(true)}}",
+                "severity_label": "{%- set a = vars.input.params['alert'] -%}{%- set prio = ((a.AlertData or {}).PRIO | default('', true) | string | upper | trim) -%}{%- if prio in ['VERY HIGH', 'VERY_HIGH', 'VERYHIGH', 'CRITICAL', 'CRIT'] -%}Critical{%- elif prio == 'HIGH' -%}High{%- elif prio in ['MEDIUM', 'MED'] -%}Medium{%- elif prio == 'LOW' -%}Low{%- elif a.LLMTriage == 1 -%}Low{%- elif a.LLMTriage == 2 and a.LLMFalsePositiveScore is number and a.LLMFalsePositiveScore <= 20 -%}High{%- else -%}Medium{%- endif -%}",
+                "previous_severity_label": "{%- set a = vars.input.params['previous_alert'] -%}{%- set prio = ((a.AlertData or {}).PRIO | default('', true) | string | upper | trim) -%}{%- if prio in ['VERY HIGH', 'VERY_HIGH', 'VERYHIGH', 'CRITICAL', 'CRIT'] -%}Critical{%- elif prio == 'HIGH' -%}High{%- elif prio in ['MEDIUM', 'MED'] -%}Medium{%- elif prio == 'LOW' -%}Low{%- elif a.LLMTriage == 1 -%}Low{%- elif a.LLMTriage == 2 and a.LLMFalsePositiveScore is number and a.LLMFalsePositiveScore <= 20 -%}High{%- else -%}Medium{%- endif -%}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "a06a67b1-eb4b-556b-b78a-9a6d2337e1ae"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Compute Severity",
+              "description": null,
+              "arguments": {
+                "severity": "{%- set current = vars.input.params['record_severity'] -%}{%- set previous = 'Severity' | picklist(vars.previous_severity_label) -%}{%- set previous_iri = previous['@id'] if previous is mapping else previous -%}{%- if not current or current == previous_iri -%}{{ 'Severity' | picklist(vars.severity_label) }}{%- else -%}{{ current }}{%- endif -%}",
+                "comment": "<p><strong>Xiting Falcora update</strong></p><ul>{% for change in vars.input.params['changes'] %}<li>{{ change | e }}</li>{% endfor %}</ul>"
+              },
+              "status": null,
+              "top": "220",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "666a7efe-0e5e-5ad0-b087-dd388ea80e9c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Alert",
+              "description": null,
+              "arguments": {
+                "resource": {
+                  "description": "{%- set a = vars.alert_data -%}<p>{{ (a.AlertData or {}).MESSAGE | default(a.AlertSemanticDescription, true) | default('', true) | e }}</p><p><strong>Falcora Triage:</strong> {{ a.LLMTriageString | default('pending', true) }}{% if a.LLMFalsePositiveScore is defined %} (false-positive score {{ a.LLMFalsePositiveScore }}/100){% endif %}<br/><strong>Processing Status:</strong> {{ a.ProcessingStatusString | default('', true) }}<br/><strong>SAP System:</strong> {{ a.SystemId | default('', true) }}<br/><strong>SAP Users:</strong> {{ (a.UserIds or []) | join(', ') }}<br/><strong>Falcora Case:</strong> {{ a.CaseId | default('', true) }}{% if a.TriageFlags %}<br/><strong>Triage Flags:</strong> {{ a.TriageFlags | join(', ') }}{% endif %}</p>{% if a.LLMTriageJustification %}<p><strong>Triage Justification (AI-generated):</strong><br/>{{ a.LLMTriageJustification | e }}</p>{% endif %}",
+                  "severity": "{{vars.severity}}",
+                  "sourcedata": "{{vars.alert_data | toJSON}}"
+                },
+                "_showJson": false,
+                "operation": "Overwrite",
+                "collection": "{{vars.input.params['record_iri']}}",
+                "__recommend": [],
+                "collectionType": "/api/3/alerts",
+                "fieldOperation": {
+                  "recordTags": "Append"
+                },
+                "step_variables": []
+              },
+              "status": null,
+              "top": "320",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928722",
+              "group": null,
+              "uuid": "ac3d672f-210d-5fcf-b0a4-c425f393c46f"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Comment?",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Yes",
+                    "step_iri": "/api/3/workflow_steps/6595e706-f640-5e0c-9be4-739589cd35ed",
+                    "condition": "{{ vars.add_comment | string | lower == 'true' }}",
+                    "step_name": "Add Change Comment"
+                  },
+                  {
+                    "option": "No",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/865eb67b-6909-5a3e-8c1a-e14eb0b5ada8",
+                    "step_name": "Done"
+                  }
+                ],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "420",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "group": null,
+              "uuid": "6bcc26cc-6bcc-525e-a819-f921e0cbf282"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Change Comment",
+              "description": null,
+              "arguments": {
+                "connector": "cyops_utilities",
+                "version": "3.3.1",
+                "params": {
+                  "iri": "/api/3/comments",
+                  "body": "{\"content\": {{ vars.comment | tojson }}, \"alerts\": [\"{{ vars.input.params['record_iri'] }}\"]}",
+                  "method": "POST"
+                },
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "520",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "6595e706-f640-5e0c-9be4-739589cd35ed"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Done",
+              "description": null,
+              "arguments": {
+                "updated": "{{vars.input.params['record_iri']}}"
+              },
+              "status": null,
+              "top": "520",
+              "left": "320",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "group": null,
+              "uuid": "865eb67b-6909-5a3e-8c1a-e14eb0b5ada8"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Extract Alert Information",
+              "sourceStep": "/api/3/workflow_steps/6a96d8b1-d755-588a-b515-0a0efaf896a6",
+              "targetStep": "/api/3/workflow_steps/a06a67b1-eb4b-556b-b78a-9a6d2337e1ae",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "3ae8fdb7-d73f-5048-a5e2-04d819ad5dd8"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Alert Information -> Compute Severity",
+              "sourceStep": "/api/3/workflow_steps/a06a67b1-eb4b-556b-b78a-9a6d2337e1ae",
+              "targetStep": "/api/3/workflow_steps/666a7efe-0e5e-5ad0-b087-dd388ea80e9c",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "c87ee30a-62de-5067-b60b-09e87a765fc1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Compute Severity -> Update Alert",
+              "sourceStep": "/api/3/workflow_steps/666a7efe-0e5e-5ad0-b087-dd388ea80e9c",
+              "targetStep": "/api/3/workflow_steps/ac3d672f-210d-5fcf-b0a4-c425f393c46f",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "95f7002e-ff6e-5b78-a809-51873afdb672"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Update Alert -> Add Comment?",
+              "sourceStep": "/api/3/workflow_steps/ac3d672f-210d-5fcf-b0a4-c425f393c46f",
+              "targetStep": "/api/3/workflow_steps/6bcc26cc-6bcc-525e-a819-f921e0cbf282",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "b99ac62e-8b9a-55ae-8eaa-baac5bf14406"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Add Comment? -> Add Change Comment",
+              "sourceStep": "/api/3/workflow_steps/6bcc26cc-6bcc-525e-a819-f921e0cbf282",
+              "targetStep": "/api/3/workflow_steps/6595e706-f640-5e0c-9be4-739589cd35ed",
+              "label": "Yes",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "a7a16808-8e0e-52a8-b456-f1c8aabd760f"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Add Comment? -> Done",
+              "sourceStep": "/api/3/workflow_steps/6bcc26cc-6bcc-525e-a819-f921e0cbf282",
+              "targetStep": "/api/3/workflow_steps/865eb67b-6909-5a3e-8c1a-e14eb0b5ada8",
+              "label": "No",
+              "isExecuted": false,
+              "group": null,
+              "uuid": "721206a9-61cf-5393-8d9a-de74cc61505c"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
