@@ -4,8 +4,8 @@
     "label": "Xiting Falcora",
     "description": "Falcora is Xiting's security operations platform for SAP landscapes. It triages SAP security alerts with AI against customer SOPs, groups them into cases, collects system owner feedback and supports the analyst up to the final verdict. This connector ingests Falcora alerts into FortiSOAR and performs actions like reading alerts and cases, adding enrichment comments, assigning case processors and re-running the AI case analysis.",
     "publisher": "Fortinet CSE",
-    "icon_small_name": "Bild.png",
-    "icon_large_name": "Bild.png",
+    "icon_small_name": "small.png",
+    "icon_large_name": "large.png",
     "id": 86,
     "configuration": {
         "fields": [
