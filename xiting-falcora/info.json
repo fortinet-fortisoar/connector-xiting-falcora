@@ -1,0 +1,1097 @@
+{
+    "name": "xiting-falcora",
+    "version": "1.0.0",
+    "label": "Xiting Falcora",
+    "description": "Falcora is Xiting's security operations platform for SAP landscapes. It triages SAP security alerts with AI against customer SOPs, groups them into cases, collects system owner feedback and supports the analyst up to the final verdict. This connector ingests Falcora alerts into FortiSOAR and performs actions like reading alerts and cases, adding enrichment comments, assigning case processors and re-running the AI case analysis.",
+    "publisher": "Fortinet CSE",
+    "icon_small_name": "small.png",
+    "icon_large_name": "large.png",
+    "id": 86,
+    "configuration": {
+        "fields": [
+            {
+                "title": "Environment",
+                "type": "select",
+                "name": "environment",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": "Test",
+                "tooltip": "Falcora environment to connect to. Test and Production set the API URL automatically. Select Custom to enter it yourself.",
+                "options": [
+                    "Test",
+                    "Production",
+                    "Custom"
+                ],
+                "onchange": {
+                    "Custom": [
+                        {
+                            "title": "API URL",
+                            "name": "api_url",
+                            "type": "text",
+                            "required": true,
+                            "visible": true,
+                            "editable": true,
+                            "value": "https://api.falcora-test.xiting.com/backend/api",
+                            "description": "Falcora API base URL including the /backend/api path prefix.",
+                            "tooltip": "Falcora API base URL including the /backend/api path prefix."
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Tenant ID",
+                "type": "text",
+                "name": "tenant_id",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "tooltip": "ID of the Falcora tenant the connection credential was created for. A credential is valid for exactly one tenant. Shown in Falcora next to the credential."
+            },
+            {
+                "title": "Username",
+                "type": "text",
+                "name": "username",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "tooltip": "Username of the Falcora connection credential (HTTP Basic authentication). Created by the Falcora administrator under Administration > Tenants > (tenant) > Technical Users."
+            },
+            {
+                "title": "Password",
+                "type": "password",
+                "name": "password",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "tooltip": "Password of the Falcora connection credential. It is shown only once, at creation; if it is lost, rotate it in Falcora."
+            },
+            {
+                "title": "Verify SSL",
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "required": false,
+                "visible": true,
+                "editable": true,
+                "value": true,
+                "tooltip": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is set to True."
+            }
+        ]
+    },
+    "operations": [
+        {
+            "operation": "get_alerts",
+            "title": "Get Alerts",
+            "description": "Retrieves a list of alerts from Falcora, newest first, based on the time range and filters you have specified. The time range applies to the time Falcora received the alert. Falcora does not page this list, so keep time ranges short.",
+            "category": "investigation",
+            "annotation": "get_alerts",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Relative Time Range",
+                    "type": "select",
+                    "name": "timestamp_relative",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Relative time range on the received time. Cannot be combined with Start Time or End Time.",
+                    "options": [
+                        "Last Hour",
+                        "Last 24 Hours",
+                        "Last 3 Days",
+                        "Last 7 Days"
+                    ]
+                },
+                {
+                    "title": "Start Time",
+                    "type": "datetime",
+                    "name": "timestamp_from",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return records whose received time is at or after this time (inclusive)."
+                },
+                {
+                    "title": "End Time",
+                    "type": "datetime",
+                    "name": "timestamp_to",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return records whose received time is before this time (exclusive)."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts linked to this case."
+                },
+                {
+                    "title": "System ID",
+                    "type": "text",
+                    "name": "system_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts for this SAP system ID (exact match)."
+                },
+                {
+                    "title": "Processing Status",
+                    "type": "select",
+                    "name": "processing_status",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts in this processing status.",
+                    "options": [
+                        "Open",
+                        "Triage In Progress",
+                        "Waiting For Owner Input",
+                        "Blocked Quota Exceeded",
+                        "Completed",
+                        "Error"
+                    ]
+                },
+                {
+                    "title": "Triage",
+                    "type": "select",
+                    "name": "triage",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts with this AI triage verdict.",
+                    "options": [
+                        "False Positive",
+                        "True Positive"
+                    ]
+                },
+                {
+                    "title": "System Owner ID",
+                    "type": "text",
+                    "name": "system_owner_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts routed to this system owner (Falcora user object ID)."
+                },
+                {
+                    "title": "Alert Type",
+                    "type": "select",
+                    "name": "alert_type",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only alerts of this source type.",
+                    "options": [
+                        "Xiting SIEM Connector",
+                        "SAP ETD",
+                        "Splunk",
+                        "Unknown"
+                    ]
+                },
+                {
+                    "title": "Include Details",
+                    "type": "checkbox",
+                    "name": "include_details",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": false,
+                    "tooltip": "Select to read every returned alert individually, adding the raw event (AlertData), the triage justification, SOP and owner feedback. This makes one extra request per alert."
+                },
+                {
+                    "title": "Limit",
+                    "type": "integer",
+                    "name": "limit",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Maximum number of alerts to return (applied after retrieval; newest first)."
+                }
+            ],
+            "output_schema": [
+                {
+                    "TenantId": "",
+                    "AlertId": "",
+                    "AlertType": "",
+                    "ReceivedAt": "",
+                    "ProcessingStatus": "",
+                    "ProcessingStatusString": "",
+                    "LLMTriage": "",
+                    "LLMTriageString": "",
+                    "LLMFalsePositiveScore": "",
+                    "LLMTriageEvaluatedAt": "",
+                    "PatternName": "",
+                    "SystemId": "",
+                    "SystemOwnerIds": [],
+                    "SystemOwnerClassification": "",
+                    "SystemOwnerFeedbackReceivedAt": "",
+                    "CaseId": "",
+                    "CaseLinkageReason": "",
+                    "UserIds": [],
+                    "SourceIPAddress": "",
+                    "UserAgent": "",
+                    "TriageFlags": [],
+                    "AlertSemanticDescription": "",
+                    "SOP": {
+                        "TenantId": "",
+                        "SOPId": "",
+                        "Version": ""
+                    },
+                    "CreatedBy": "",
+                    "ChangedBy": ""
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "get_alert_details",
+            "title": "Get Alert Details",
+            "description": "Retrieves the full details of a specific alert, including the raw event, triage justification, SOP, owner feedback and action log, based on the alert ID you have specified.",
+            "category": "investigation",
+            "annotation": "get_alert",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Alert ID",
+                    "type": "text",
+                    "name": "alert_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora alert."
+                }
+            ],
+            "output_schema": {
+                "TenantId": "",
+                "AlertId": "",
+                "AlertType": "",
+                "ReceivedAt": "",
+                "ProcessingStatus": "",
+                "ProcessingStatusString": "",
+                "LLMTriage": "",
+                "LLMTriageString": "",
+                "LLMFalsePositiveScore": "",
+                "LLMTriageEvaluatedAt": "",
+                "PatternName": "",
+                "SystemId": "",
+                "SystemOwnerIds": [],
+                "SystemOwnerClassification": "",
+                "SystemOwnerFeedbackReceivedAt": "",
+                "CaseId": "",
+                "CaseLinkageReason": "",
+                "UserIds": [],
+                "SourceIPAddress": "",
+                "UserAgent": "",
+                "TriageFlags": [],
+                "AlertSemanticDescription": "",
+                "SOP": {
+                    "TenantId": "",
+                    "SOPId": "",
+                    "Version": ""
+                },
+                "CreatedBy": "",
+                "ChangedBy": "",
+                "AlertData": {
+                    "ID": "",
+                    "NAME": "",
+                    "MESSAGE": "",
+                    "PRIO": "",
+                    "SYSID": "",
+                    "userid": "",
+                    "TIME_STAMP": "",
+                    "T_FIELDS": [
+                        {
+                            "MAP_ID": "",
+                            "VAL": ""
+                        }
+                    ],
+                    "T_CEF": [
+                        {
+                            "ID": "",
+                            "VAL": "",
+                            "LABEL": ""
+                        }
+                    ],
+                    "T_MATCHES": []
+                },
+                "LLMTriageJustification": "",
+                "SOPActions": "",
+                "SOPQuestionsForOwner": [],
+                "SystemOwnerAnswers": [],
+                "SystemOwnerFeedback": "",
+                "AIAnsweredQuestions": [],
+                "AutoResolvedByAI": "",
+                "AIAnswerOverridden": "",
+                "SapArtifacts": {
+                    "Version": "",
+                    "TransactionCodes": []
+                },
+                "ActionLog": [
+                    {
+                        "Timestamp": "",
+                        "Actor": "",
+                        "Type": "",
+                        "Details": ""
+                    }
+                ],
+                "ErrorMessage": "",
+                "RetryCount": "",
+                "LastRetryAt": ""
+            },
+            "open": false
+        },
+        {
+            "operation": "get_alert_updates",
+            "title": "Get Alert Updates",
+            "description": "Re-reads alerts that were already fetched from Falcora and reports which ones changed since, for example a new triage verdict, owner feedback, a different case or a new processing status. Use it to keep FortiSOAR alerts in sync with Falcora. Makes one request per alert.",
+            "category": "investigation",
+            "annotation": "get_alerts",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Used for alerts whose stored data has no TenantId. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Alerts",
+                    "type": "json",
+                    "name": "alerts",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "List of the alerts to check, at most 200. Each entry can be a FortiSOAR alert record (its Source Data holds the previously fetched Falcora alert), a Falcora alert object, or a Falcora alert ID.",
+                    "description": "List of the alerts to check, at most 200. Each entry can be a FortiSOAR alert record (its Source Data holds the previously fetched Falcora alert), a Falcora alert object, or a Falcora alert ID. A plain alert ID has nothing to compare against, so it is always reported as updated."
+                }
+            ],
+            "output_schema": {
+                "UpdatedCount": "",
+                "Updated": [
+                    {
+                        "RecordIRI": "",
+                        "AlertId": "",
+                        "RecordSeverity": "",
+                        "Changes": [],
+                        "PreviousAlert": {},
+                        "Alert": {
+                            "TenantId": "",
+                            "AlertId": "",
+                            "AlertType": "",
+                            "ReceivedAt": "",
+                            "ProcessingStatus": "",
+                            "ProcessingStatusString": "",
+                            "LLMTriage": "",
+                            "LLMTriageString": "",
+                            "LLMFalsePositiveScore": "",
+                            "LLMTriageEvaluatedAt": "",
+                            "PatternName": "",
+                            "SystemId": "",
+                            "SystemOwnerIds": [],
+                            "SystemOwnerClassification": "",
+                            "SystemOwnerFeedbackReceivedAt": "",
+                            "CaseId": "",
+                            "CaseLinkageReason": "",
+                            "UserIds": [],
+                            "SourceIPAddress": "",
+                            "UserAgent": "",
+                            "TriageFlags": [],
+                            "AlertSemanticDescription": "",
+                            "SOP": {
+                                "TenantId": "",
+                                "SOPId": "",
+                                "Version": ""
+                            },
+                            "CreatedBy": "",
+                            "ChangedBy": "",
+                            "AlertData": {
+                                "ID": "",
+                                "NAME": "",
+                                "MESSAGE": "",
+                                "PRIO": "",
+                                "SYSID": "",
+                                "userid": "",
+                                "TIME_STAMP": "",
+                                "T_FIELDS": [
+                                    {
+                                        "MAP_ID": "",
+                                        "VAL": ""
+                                    }
+                                ],
+                                "T_CEF": [
+                                    {
+                                        "ID": "",
+                                        "VAL": "",
+                                        "LABEL": ""
+                                    }
+                                ],
+                                "T_MATCHES": []
+                            },
+                            "LLMTriageJustification": "",
+                            "SOPActions": "",
+                            "SOPQuestionsForOwner": [],
+                            "SystemOwnerAnswers": [],
+                            "SystemOwnerFeedback": "",
+                            "AIAnsweredQuestions": [],
+                            "AutoResolvedByAI": "",
+                            "AIAnswerOverridden": "",
+                            "SapArtifacts": {
+                                "Version": "",
+                                "TransactionCodes": []
+                            },
+                            "ActionLog": [
+                                {
+                                    "Timestamp": "",
+                                    "Actor": "",
+                                    "Type": "",
+                                    "Details": ""
+                                }
+                            ],
+                            "ErrorMessage": "",
+                            "RetryCount": "",
+                            "LastRetryAt": ""
+                        }
+                    }
+                ],
+                "Unchanged": [
+                    {
+                        "RecordIRI": "",
+                        "AlertId": ""
+                    }
+                ],
+                "NotFound": [
+                    {
+                        "RecordIRI": "",
+                        "AlertId": ""
+                    }
+                ],
+                "Errors": [
+                    {
+                        "RecordIRI": "",
+                        "AlertId": "",
+                        "Error": ""
+                    }
+                ]
+            },
+            "open": false
+        },
+        {
+            "operation": "get_cases",
+            "title": "Get Cases",
+            "description": "Retrieves a list of cases from Falcora based on the time range and filters you have specified. The time range applies to the case creation time.",
+            "category": "investigation",
+            "annotation": "get_cases",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Top",
+                    "type": "integer",
+                    "name": "top",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only the newest N cases by creation time (1 to 1000)."
+                },
+                {
+                    "title": "Relative Time Range",
+                    "type": "select",
+                    "name": "timestamp_relative",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Relative time range on the creation time. Cannot be combined with Start Time or End Time.",
+                    "options": [
+                        "Last Hour",
+                        "Last 24 Hours",
+                        "Last 3 Days",
+                        "Last 7 Days"
+                    ]
+                },
+                {
+                    "title": "Start Time",
+                    "type": "datetime",
+                    "name": "timestamp_from",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return records whose creation time is at or after this time (inclusive)."
+                },
+                {
+                    "title": "End Time",
+                    "type": "datetime",
+                    "name": "timestamp_to",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return records whose creation time is before this time (exclusive)."
+                },
+                {
+                    "title": "Processing Status",
+                    "type": "select",
+                    "name": "processing_status",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases in this processing status.",
+                    "options": [
+                        "Open",
+                        "Waiting For Owner",
+                        "Ready For Analysis",
+                        "Analysis In Progress",
+                        "Ready For Review",
+                        "Completed",
+                        "Error"
+                    ]
+                },
+                {
+                    "title": "Final Verdict",
+                    "type": "select",
+                    "name": "final_verdict",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases the analyst finalized with this verdict.",
+                    "options": [
+                        "Malicious Behaviour",
+                        "Improper Operation",
+                        "Not An Issue"
+                    ]
+                },
+                {
+                    "title": "Severity",
+                    "type": "select",
+                    "name": "severity",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases with this severity (analyst severity, or AI severity if not yet finalized). Filtered by the connector.",
+                    "options": [
+                        "Low",
+                        "Medium",
+                        "High",
+                        "Very High"
+                    ]
+                },
+                {
+                    "title": "Processor ID",
+                    "type": "text",
+                    "name": "processor_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases assigned to this Falcora user object ID."
+                },
+                {
+                    "title": "SAP User ID",
+                    "type": "text",
+                    "name": "user_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases involving this SAP user name (case-insensitive)."
+                },
+                {
+                    "title": "System ID",
+                    "type": "text",
+                    "name": "system_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases involving this SAP system ID."
+                },
+                {
+                    "title": "Changed By",
+                    "type": "text",
+                    "name": "changed_by",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Return only cases last changed by this identity."
+                }
+            ],
+            "output_schema": [
+                {
+                    "TenantId": "",
+                    "CaseId": "",
+                    "CaseTitle": "",
+                    "ProcessingStatus": "",
+                    "ProcessingStatusString": "",
+                    "LLMAnalysisSeverity": "",
+                    "LLMAnalysisSeverityString": "",
+                    "LLMRecommendedVerdict": "",
+                    "LLMRecommendedVerdictString": "",
+                    "ProcessorId": "",
+                    "UserIds": [],
+                    "SystemIds": [],
+                    "CreatedAt": "",
+                    "ChangedAt": "",
+                    "CreatedBy": "",
+                    "ChangedBy": "",
+                    "CaseSummaryPending": "",
+                    "ProcessingMode": "",
+                    "AnalystFinalVerdict": "",
+                    "AnalystFinalVerdictString": "",
+                    "AnalystSeverity": "",
+                    "AnalystSeverityString": ""
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "get_case_details",
+            "title": "Get Case Details",
+            "description": "Retrieves the full details of a specific case, including the summary, AI analysis, analyst decision, progress, latest AI investigation, history and comments, based on the case ID you have specified.",
+            "category": "investigation",
+            "annotation": "get_case",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora case."
+                }
+            ],
+            "output_schema": {
+                "TenantId": "",
+                "CaseId": "",
+                "CaseTitle": "",
+                "ProcessingStatus": "",
+                "ProcessingStatusString": "",
+                "LLMAnalysisSeverity": "",
+                "LLMAnalysisSeverityString": "",
+                "LLMRecommendedVerdict": "",
+                "LLMRecommendedVerdictString": "",
+                "ProcessorId": "",
+                "UserIds": [],
+                "SystemIds": [],
+                "CreatedAt": "",
+                "ChangedAt": "",
+                "CreatedBy": "",
+                "ChangedBy": "",
+                "CaseSummaryPending": "",
+                "ProcessingMode": "",
+                "AnalystFinalVerdict": "",
+                "AnalystFinalVerdictString": "",
+                "AnalystSeverity": "",
+                "AnalystSeverityString": "",
+                "CaseSummary": "",
+                "CaseSummaryUpdatedAt": "",
+                "LLMAnalysisAnalystExecutiveSummary": "",
+                "LLMAnalysisAlertSummary": "",
+                "LLMAnalysisSOFeedbackSummary": "",
+                "LLMAnalysisImpact": "",
+                "LLMAnalysisConfidenceLevel": "",
+                "LLMAnalysisEvaluatedAt": "",
+                "LLMRecommendedVerdictJustification": "",
+                "LLMAnalysisRecommendedSteps": [],
+                "LLMAnalysisReferences": [],
+                "LLMAnalysisSOPIds": [],
+                "AnalystUserId": "",
+                "AnalystJustification": "",
+                "AnalystDeviationReason": "",
+                "AnalystEvaluatedAt": "",
+                "IncidentLink": "",
+                "CaseProgress": {
+                    "Alerts": {
+                        "Total": "",
+                        "TriageDone": "",
+                        "WaitingForOwnerInput": "",
+                        "Completed": "",
+                        "InError": ""
+                    },
+                    "OwnerFeedback": {
+                        "Answered": "",
+                        "AnsweredByAI": "",
+                        "Pending": ""
+                    },
+                    "Analysis": {
+                        "State": "",
+                        "CompletedAt": "",
+                        "Verdict": "",
+                        "Severity": "",
+                        "Confidence": ""
+                    },
+                    "AnalystDecision": {
+                        "State": "",
+                        "FinalizedAt": "",
+                        "Verdict": ""
+                    },
+                    "LastChangeAt": "",
+                    "LastChangeByType": ""
+                },
+                "AIInvestigation": {
+                    "InvestigationId": "",
+                    "Mode": "",
+                    "Status": "",
+                    "CompletedAt": "",
+                    "Verdict": "",
+                    "Confidence": "",
+                    "Summary": "",
+                    "EvidenceRefs": [],
+                    "EvidenceGaps": [],
+                    "StopReason": "",
+                    "ContentTrust": ""
+                },
+                "StatusHistory": [
+                    {
+                        "Status": "",
+                        "StatusName": "",
+                        "Timestamp": "",
+                        "ChangedBy": ""
+                    }
+                ],
+                "ActionLog": [
+                    {
+                        "Timestamp": "",
+                        "Actor": "",
+                        "Type": "",
+                        "Details": ""
+                    }
+                ],
+                "Comments": [
+                    {
+                        "TenantId": "",
+                        "CaseId": "",
+                        "CommentId": "",
+                        "AuthorOid": "",
+                        "AuthorDisplayName": "",
+                        "CreatedAt": "",
+                        "Text": "",
+                        "Source": "",
+                        "Edited": ""
+                    }
+                ],
+                "ErrorMessage": ""
+            },
+            "open": false
+        },
+        {
+            "operation": "get_case_alerts",
+            "title": "Get Case Alerts",
+            "description": "Retrieves the alerts linked to a specific case.",
+            "category": "investigation",
+            "annotation": "get_alerts",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora case."
+                },
+                {
+                    "title": "Include Details",
+                    "type": "checkbox",
+                    "name": "include_details",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": false,
+                    "tooltip": "Select to read every alert individually to include the raw event and triage details."
+                }
+            ],
+            "output_schema": [
+                {
+                    "TenantId": "",
+                    "AlertId": "",
+                    "AlertType": "",
+                    "ReceivedAt": "",
+                    "ProcessingStatus": "",
+                    "ProcessingStatusString": "",
+                    "LLMTriage": "",
+                    "LLMTriageString": "",
+                    "LLMFalsePositiveScore": "",
+                    "LLMTriageEvaluatedAt": "",
+                    "PatternName": "",
+                    "SystemId": "",
+                    "SystemOwnerIds": [],
+                    "SystemOwnerClassification": "",
+                    "SystemOwnerFeedbackReceivedAt": "",
+                    "CaseId": "",
+                    "CaseLinkageReason": "",
+                    "UserIds": [],
+                    "SourceIPAddress": "",
+                    "UserAgent": "",
+                    "TriageFlags": [],
+                    "AlertSemanticDescription": "",
+                    "SOP": {
+                        "TenantId": "",
+                        "SOPId": "",
+                        "Version": ""
+                    },
+                    "CreatedBy": "",
+                    "ChangedBy": ""
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "add_case_comment",
+            "title": "Add Case Comment",
+            "description": "Adds enrichment to a case as a plain-text comment. Comments longer than 1000 characters are split into several comments. The sequence \"${\" is escaped automatically. Comments cannot be deleted and completed cases do not accept comments.",
+            "category": "investigation",
+            "annotation": "add_comment",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora case."
+                },
+                {
+                    "title": "Comment",
+                    "type": "textarea",
+                    "name": "text",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Plain text of the comment."
+                },
+                {
+                    "title": "Prefix",
+                    "type": "text",
+                    "name": "prefix",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": "[FortiSOAR]",
+                    "tooltip": "Text placed in front of every comment so analysts can tell it apart from their own notes."
+                },
+                {
+                    "title": "Split Long Comments",
+                    "type": "checkbox",
+                    "name": "split_long_comments",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": true,
+                    "tooltip": "Select to split comments longer than 1000 characters into several comments. If cleared, long comments fail."
+                }
+            ],
+            "output_schema": {
+                "CommentCount": "",
+                "Comments": [
+                    {
+                        "TenantId": "",
+                        "CaseId": "",
+                        "CommentId": "",
+                        "AuthorOid": "",
+                        "AuthorDisplayName": "",
+                        "CreatedAt": "",
+                        "Text": "",
+                        "Source": "",
+                        "Edited": ""
+                    }
+                ]
+            },
+            "open": false
+        },
+        {
+            "operation": "assign_case_processor",
+            "title": "Assign Case Processor",
+            "description": "Sets or clears the processor of a case.",
+            "category": "investigation",
+            "annotation": "assign_case",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora case."
+                },
+                {
+                    "title": "Assignee",
+                    "type": "select",
+                    "name": "assignee",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "Specific User",
+                    "tooltip": "Select Specific User to assign the case to a Falcora user, or Clear Processor to remove the processor.",
+                    "options": [
+                        "Specific User",
+                        "Clear Processor"
+                    ],
+                    "onchange": {
+                        "Specific User": [
+                            {
+                                "title": "Processor ID",
+                                "name": "processor_id",
+                                "type": "text",
+                                "required": true,
+                                "visible": true,
+                                "editable": true,
+                                "description": "Falcora user object ID of the new processor.",
+                                "tooltip": "Falcora user object ID of the new processor."
+                            }
+                        ]
+                    }
+                }
+            ],
+            "output_schema": {
+                "Status": "",
+                "Message": "",
+                "TenantId": "",
+                "CaseId": "",
+                "ProcessorId": ""
+            },
+            "open": false
+        },
+        {
+            "operation": "trigger_case_analysis",
+            "title": "Trigger Case Analysis",
+            "description": "Re-runs the AI case analysis, for example after adding significant enrichment. Also reopens completed cases for analysis.",
+            "category": "investigation",
+            "annotation": "analyze",
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "Tenant ID",
+                    "type": "text",
+                    "name": "tenant_id",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID of the Falcora tenant. Leave empty to use the Tenant ID from the connector configuration."
+                },
+                {
+                    "title": "Case ID",
+                    "type": "text",
+                    "name": "case_id",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "ID (UUID) of the Falcora case."
+                },
+                {
+                    "title": "Reason",
+                    "type": "textarea",
+                    "name": "comment",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "Reason for the re-run, up to 1000 characters. Stored on the case as a comment."
+                }
+            ],
+            "output_schema": {
+                "Status": "",
+                "Message": "",
+                "ProcessingStatus": ""
+            },
+            "open": false
+        }
+    ],
+    "category": [
+        "Threat Detection"
+    ],
+    "contributor": "Julian Petersohn",
+    "active": true,
+    "cs_compatible": true,
+    "system": false,
+    "playbook_collections": [
+        {
+            "@id": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
+            "name": "Sample - Xiting Falcora - 1.0.0",
+            "image": null,
+            "description": "Sample playbooks for \"Xiting Falcora\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete."
+        }
+    ],
+    "icon_small": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAV0lEQVR42mNgQAchVf9pinECWluM1yH0thzDEQPqgIGyHO6IoeAAcsGoA2jigAFPA6MOGHXAoC+Ihr8DRtPAqANGHTDqgJHZKB2+fYPB0zUb8M7pAHbPAUqT6M3w3B9eAAAAAElFTkSuQmCC",
+    "icon_large": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABB0lEQVR42u3dsQnAIABFQYfMNFk+adML8own/AXeVWLhGLPnuh/7bPkRPQIkbghG0AiKiCEY4UIogoVQhIqhiBQCESiEIkwMRZQQiCAxFDGAGJBNQISIoYhwLsiOBwgQIECAAAECBAgQIECALAZxUwcCBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECxBPuT59ngQABAgQIECBAgAABAgSImzoQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBMihIAYEiM2C+IcqhgEEiAHZDARKDANIEARKDANKEANIEARKDANKEANKEANMEAJKFANMEALQEoAXJRardtTIVJMAAAAASUVORK5CYII=",
+    "help_online": "https://github.com/fortinet-fortisoar/connector-xiting-falcora/tree/release/1.0.0/xiting-falcora/docs/xiting-falcora-doc.md",
+    "vendor_version": null,
+    "ingestion_supported": true,
+    "ingestion_modes": [
+        "scheduled"
+    ],
+    "ingestion_preferences": {
+        "modules": [
+            "alerts"
+        ]
+    }
+}
