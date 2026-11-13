@@ -37,7 +37,3 @@ See the [connector documentation](xiting-falcora/docs/xiting-falcora-doc.md) for
 | `xiting-falcora/` | Connector source, `info.json`, playbooks and images |
 | `xiting-falcora/docs/` | Connector documentation |
 | `.github/workflows/` | Sanity checks and tests |
-
-## License
-
-[MIT](LICENSE)
