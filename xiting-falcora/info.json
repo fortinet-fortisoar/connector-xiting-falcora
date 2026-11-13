@@ -1,6 +1,6 @@
 {
     "name": "xiting-falcora",
-    "version": "1.1.0",
+    "version": "1.0.0",
     "label": "Xiting Falcora",
     "description": "Falcora is Xiting's security operations platform for SAP landscapes. It triages SAP security alerts with AI against customer SOPs, groups them into cases, collects system owner feedback and supports the analyst up to the final verdict. This connector ingests Falcora alerts into FortiSOAR and performs actions like reading alerts and cases, adding enrichment comments, assigning case processors and re-running the AI case analysis.",
     "publisher": "Fortinet CSE",
@@ -1076,14 +1076,14 @@
     "playbook_collections": [
         {
             "@id": "/api/3/workflow_collections/f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
-            "name": "Sample - Xiting Falcora - 1.1.0",
+            "name": "Sample - Xiting Falcora - 1.0.0",
             "image": null,
             "description": "Sample playbooks for \"Xiting Falcora\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete."
         }
     ],
     "icon_small": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAV0lEQVR42mNgQAchVf9pinECWluM1yH0thzDEQPqgIGyHO6IoeAAcsGoA2jigAFPA6MOGHXAoC+Ihr8DRtPAqANGHTDqgJHZKB2+fYPB0zUb8M7pAHbPAUqT6M3w3B9eAAAAAElFTkSuQmCC",
     "icon_large": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABB0lEQVR42u3dsQnAIABFQYfMNFk+adML8own/AXeVWLhGLPnuh/7bPkRPQIkbghG0AiKiCEY4UIogoVQhIqhiBQCESiEIkwMRZQQiCAxFDGAGJBNQISIoYhwLsiOBwgQIECAAAECBAgQIECALAZxUwcCBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECxBPuT59ngQABAgQIECBAgAABAgSImzoQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBMihIAYEiM2C+IcqhgEEiAHZDARKDANIEARKDANKEANIEARKDANKEANKEANMEAJKFANMEALQEoAXJRardtTIVJMAAAAASUVORK5CYII=",
-    "help_online": "https://github.com/fortinet-fortisoar/connector-xiting-falcora/tree/release/1.1.0/xiting-falcora/docs/xiting-falcora-doc.md",
+    "help_online": "https://github.com/fortinet-fortisoar/connector-xiting-falcora/tree/release/1.0.0/xiting-falcora/docs/xiting-falcora-doc.md",
     "vendor_version": null,
     "ingestion_supported": true,
     "ingestion_modes": [

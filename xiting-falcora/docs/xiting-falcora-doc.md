@@ -3,7 +3,7 @@ Xiting Falcora is a security operations platform for SAP landscapes. It triages 
 <p>This document provides information about the Xiting Falcora Connector, which facilitates automated interactions with a Xiting Falcora server using FortiSOAR&trade; playbooks. Add the Xiting Falcora Connector as a step in FortiSOAR&trade; playbooks and perform automated operations with Xiting Falcora, such as ingesting Falcora alerts, reading alerts and cases, adding enrichment comments to cases and re-running the AI case analysis.</p>
 ### Version information
 
-Connector Version: 1.1.0
+Connector Version: 1.0.0
 
 Authored By: Fortinet CSE
 
@@ -12,24 +12,6 @@ Contributors: Julian Petersohn
 Certified: No
 
 Compatible Falcora API: Falcora Integration API 0.9
-
-## Release Notes for version 1.1.0
-#### What's New
-- Authentication now uses HTTP Basic with a Falcora connection credential (Administration > Tenants > (tenant) > Technical Users). Microsoft Entra ID authentication (Username and Password and Client Credentials flows) has been removed.
-- Tenant ID is now required in the configuration, because a connection credential is valid for exactly one tenant.
-- The health check verifies the credential with a narrow alert query on the configured tenant instead of `/info/me`.
-- Clearer error messages when a credential is rejected or not permitted to call an endpoint.
-- New action Get Alert Updates and the playbooks `Xiting Falcora > Sync Alerts` and `> Xiting Falcora > Update Record`, which mirror changes in Falcora (triage, owner feedback, case, processing status) into the ingested FortiSOAR alerts on a schedule.
-- Connector documentation with input parameters, output schemas, sample responses, value reference, error handling and data ingestion setup.
-- Data ingestion: the ingestion parameters set in the Data Ingestion Wizard are now applied, alert severity is derived from `AlertData.PRIO` or the Falcora triage verdict and false-positive score, and the severity picklist lookup has been fixed.
-- Output schemas include `UserAgent`, `CaseLinkageReason`, `ProcessingMode` and the structure of `AlertData`.
-
-#### Removed
-The following actions are not available to a connection credential and have been removed, together with their sample playbooks:
-- Alerts: Assign Alert to Case, Retry Triage, Bulk Retry Triage, Re-evaluate Triage.
-- Cases: Get Case Graph, Update Case Comment, Get Eligible Processors, Finalize Case Evaluation, and the Integration User option of Assign Case Processor.
-- Enrichment: Get Systems, Get System Details, Get System Custom Attribute Definitions, Get SLAs, Get SLA Details, Get Users, Get User Details, Get Current User.
-- MITRE ATT&CK: Get MITRE Technique, Get MITRE Matrices, Get MITRE Matrix.
 
 ## Installing the connector
 <p>Use the <strong>Content Hub</strong> to install the connector. For the detailed procedure to install a connector, click <a href="https://docs.fortinet.com/document/fortisoar/0.0.0/installing-a-connector/1/installing-a-connector" target="_top">here</a>.</p><p>You can also use the <code>yum</code> command as a root user to install the connector:</p>
@@ -1389,7 +1371,7 @@ Every failed request raises a connector error of the form <code>Falcora API erro
 </tbody></table>
 
 ## Included playbooks
-The `Sample - Xiting Falcora - 1.1.0` playbook collection comes bundled with the Xiting Falcora connector. These playbooks contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > **Playbooks** section in FortiSOAR&trade; after importing the Xiting Falcora connector.
+The `Sample - Xiting Falcora - 1.0.0` playbook collection comes bundled with the Xiting Falcora connector. These playbooks contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > **Playbooks** section in FortiSOAR&trade; after importing the Xiting Falcora connector.
 
 - `Get Alerts`
 - `Get Alert Details`

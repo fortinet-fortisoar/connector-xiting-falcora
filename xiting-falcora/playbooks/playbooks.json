@@ -4,7 +4,7 @@
     {
       "uuid": "f7c4c19f-086b-5413-8ff4-6b6d1dc31311",
       "@type": "WorkflowCollection",
-      "name": "Sample - Xiting Falcora - 1.1.0",
+      "name": "Sample - Xiting Falcora - 1.0.0",
       "description": "Falcora is Xiting's security operations platform for SAP landscapes. It triages SAP security alerts with AI against customer SOPs, groups them into cases, collects system owner feedback and supports the analyst up to the final verdict. This connector ingests Falcora alerts into FortiSOAR and performs actions like reading alerts and cases, adding enrichment comments, assigning case processors and re-running the AI case analysis.",
       "visible": true,
       "image": null,
@@ -67,7 +67,7 @@
                 "params": {
                   "include_details": false
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_alerts",
                 "operationTitle": "Get Alerts",
@@ -158,7 +158,7 @@
                 "name": "Xiting Falcora",
                 "config": "''",
                 "params": {},
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_alert_details",
                 "operationTitle": "Get Alert Details",
@@ -249,7 +249,7 @@
                 "name": "Xiting Falcora",
                 "config": "''",
                 "params": {},
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_cases",
                 "operationTitle": "Get Cases",
@@ -340,7 +340,7 @@
                 "name": "Xiting Falcora",
                 "config": "''",
                 "params": {},
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_case_details",
                 "operationTitle": "Get Case Details",
@@ -433,7 +433,7 @@
                 "params": {
                   "include_details": false
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_case_alerts",
                 "operationTitle": "Get Case Alerts",
@@ -527,7 +527,7 @@
                   "prefix": "[FortiSOAR]",
                   "split_long_comments": true
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "add_case_comment",
                 "operationTitle": "Add Case Comment",
@@ -621,7 +621,7 @@
                   "assignee": "Specific User",
                   "processor_id": ""
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "assign_case_processor",
                 "operationTitle": "Assign Case Processor",
@@ -712,7 +712,7 @@
                 "name": "Xiting Falcora",
                 "config": "''",
                 "params": {},
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "trigger_case_analysis",
                 "operationTitle": "Trigger Case Analysis",
@@ -937,7 +937,7 @@
                   "timestamp_to": "{{vars.windowEnd}}",
                   "include_details": "{{vars.includeDetails}}"
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_alerts",
                 "operationTitle": "Get Alerts",
@@ -1514,7 +1514,7 @@
                 "params": {
                   "alerts": "{{vars.steps.Find_Falcora_Alerts.data['hydra:member']}}"
                 },
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "connector": "xiting-falcora",
                 "operation": "get_alert_updates",
                 "operationTitle": "Get Alert Updates",
